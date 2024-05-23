@@ -9,6 +9,7 @@ import { ProfesorService } from './profesor/profesor.service';
 import { PropuestaService } from './services/propuesta.service';
 import { EstudianteService } from './services/estudiante.service';
 import { ProyectoService } from './services/proyecto.service';
+import { PropuestaController } from './controllers/propuesta.controller';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { ProyectoService } from './services/proyecto.service';
       /*TypeOrmModule.forFeature([AlbumEntity])*/
   ],
   controllers: [
-    AppController
+    AppController,
+    PropuestaController
   ],
   providers: [
     AppService,

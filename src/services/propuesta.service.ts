@@ -15,10 +15,34 @@ export class PropuestaService {
     ) {}
 
     async crearPropuesta(createPropuestaDto: CreatePropuestaDto): Promise<Propuesta> {
-        if (createProfesorDto.grupoInvestigacion != "TICSW" && createProfesorDto.grupoInvestigacion != "IMAGINE" && createProfesorDto.grupoInvestigacion != "COMIT"){
-            throw new BadRequestException('El profesor no pertenece a un grupo de investigación valido')
+        if (!createPropuestaDto.titulo) {
+            throw new BadRequestException('La propuesta no se pudo crear porque no tiene titulo')
         }
-        const profesor = this.profesorRepository.create(createProfesorDto);
-        return await this.profesorRepository.save(profesor);
+        const propuesta = this.propuestaRepository.create(createPropuestaDto);
+        return await this.propuestaRepository.save(propuesta);
+    }
+
+    async findPropuestaById(id: number): Promise<Propuesta> {
+        const propuesta = await this.propuestaRepository.findOne({ where: {id} });
+        if (!propuesta) {
+            throw new NotFoundException(`Propuesta con id ${id} no encontrada`);
+        }
+        return propuesta;
+    }
+
+    async findAllPropuestas(): Promise<Propuesta[]> {
+        return await this.propuestaRepository.find();
+    }
+
+    async eliminarPropuestaById(id: number) {
+        const propuesta: Propuesta = await this.propuestaRepository.findOne({ where: {id}, relations: ['proyecto'] });
+        if (!propuesta) {
+            throw new NotFoundException(`Propuesta con id ${id} no encontrado`);
+        }
+        if (propuesta.proyecto) {
+            throw new BadRequestException('No se puede eliminar la propuesta porque tiene asociado un proyecto');
+        }
+        await this.propuestaRepository.delete(id);
+        return { message: 'Propuesta eliminada exitosamente' };
     }
 }

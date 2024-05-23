@@ -17,7 +17,7 @@ export class ProfesorService {
 
     async crearProfesor(createProfesorDto: CreateProfesorDto): Promise<Profesor> {
         if (createProfesorDto.grupoInvestigacion != "TICSW" && createProfesorDto.grupoInvestigacion != "IMAGINE" && createProfesorDto.grupoInvestigacion != "COMIT"){
-            throw new BadRequestException('El profesor no pertenece a un grupo de investigación valido')
+            throw new BadRequestException('El profesor no pertenece a un grupo de investigación valido');
         }
         const profesor = this.profesorRepository.create(createProfesorDto);
         return await this.profesorRepository.save(profesor);
@@ -39,7 +39,7 @@ export class ProfesorService {
         for (var i = 0; i < profesor.propuestas.length; i++) {
             const propuesta: Propuesta = profesor.propuestas[i];
             if (propuesta.proyecto) {
-                throw new BadRequestException('No se puede eliminar un profesor que tiene una propuesta con un proyecto asociado')
+                throw new BadRequestException('No se puede eliminar un profesor que tiene una propuesta con un proyecto asociado');
             }
         } 
         await this.profesorRepository.delete(id);
@@ -54,7 +54,7 @@ export class ProfesorService {
         for (var i = 0; i < profesor.propuestas.length; i++) {
             const propuesta: Propuesta = profesor.propuestas[i];
             if (propuesta.proyecto) {
-                throw new BadRequestException('No se puede eliminar un profesor que tiene una propuesta con un proyecto asociado')
+                throw new BadRequestException('No se puede eliminar un profesor que tiene una propuesta con un proyecto asociado');
             }
         } 
         await this.profesorRepository.delete(documento);

@@ -2,8 +2,8 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Profesor } from 'src/models/profesor.entity';
-import { Propuesta } from 'src/models/propuesta.entity';
+import { Profesor } from '../models/profesor.entity';
+import { Propuesta } from '../models/propuesta.entity';
 
 import { CreateProfesorDto } from 'src/dtos/profesor.dto';
 
@@ -36,27 +36,31 @@ export class ProfesorService {
         if (!profesor) {
             throw new NotFoundException(`Profesor con id ${id} no encontrado`);
         }
+        /*
         for (var i = 0; i < profesor.propuestas.length; i++) {
             const propuesta: Propuesta = profesor.propuestas[i];
             if (propuesta.proyecto) {
                 throw new BadRequestException('No se puede eliminar un profesor que tiene una propuesta con un proyecto asociado');
             }
-        } 
+        }
+        */
         await this.profesorRepository.delete(id);
         return { message: 'Profesor eliminado exitosamente' };
     }
 
     async eliminarProfesorByDocumento(documento: number) {
-        const profesor: Profesor = await this.profesorRepository.findOne({ where: {documento} });
+        const profesor: Profesor = await this.profesorRepository.findOne({ where: {documento}, relations: ['propuestas'] });
         if (!profesor) {
             throw new NotFoundException(`Profesor con documento ${documento} no encontrado`);
         }
+        /*
         for (var i = 0; i < profesor.propuestas.length; i++) {
             const propuesta: Propuesta = profesor.propuestas[i];
             if (propuesta.proyecto) {
                 throw new BadRequestException('No se puede eliminar un profesor que tiene una propuesta con un proyecto asociado');
             }
-        } 
+        }
+        */
         await this.profesorRepository.delete(documento);
         return { message: 'Profesor eliminado exitosamente' };
     }

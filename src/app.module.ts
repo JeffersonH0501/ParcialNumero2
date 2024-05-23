@@ -5,6 +5,10 @@ import { databaseConfig } from './config/database.config';
 import { AppController } from './app.controller';
 
 import { AppService } from './app.service';
+import { ProfesorService } from './profesor/profesor.service';
+import { PropuestaService } from './services/propuesta.service';
+import { EstudianteService } from './services/estudiante.service';
+import { ProyectoService } from './services/proyecto.service';
 
 @Module({
   imports: [
@@ -15,7 +19,11 @@ import { AppService } from './app.service';
     AppController
   ],
   providers: [
-    AppService
+    AppService,
+    ProfesorService,
+    PropuestaService,
+    EstudianteService,
+    ProyectoService
   ]
 })
 

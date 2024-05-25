@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Proyecto } from 'src/models/proyecto.entity';
+import { Proyecto } from '../models/proyecto.entity';
 
-import { CreateProyectoDto } from 'src/dtos/proyecto.dto';
+import { CreateProyectoDto } from '../dtos/proyecto.dto';
 
 @Injectable()
 export class ProyectoService {

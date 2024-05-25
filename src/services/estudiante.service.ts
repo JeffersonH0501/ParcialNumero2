@@ -2,9 +2,9 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Estudiante } from 'src/models/estudiante.entity';
+import { Estudiante } from '../models/estudiante.entity';
 
-import { CreateEstudianteDto } from 'src/dtos/estudiante.dto';
+import { CreateEstudianteDto } from '../dtos/estudiante.dto';
 
 @Injectable()
 export class EstudianteService {
@@ -15,7 +15,7 @@ export class EstudianteService {
     ) {}
 
     async crearEstudiante(createEstudianteDto: CreateEstudianteDto): Promise<Estudiante> {
-        if (createEstudianteDto.codigo.length == 10) {
+        if (createEstudianteDto.codigo.length != 10) {
             throw new BadRequestException('El estudiante no se pudo crear porque su codigo no tiene 10 caracteres');
         }
         const estudiante = this.estudianteRepository.create(createEstudianteDto);

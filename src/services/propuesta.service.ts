@@ -2,9 +2,9 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Propuesta } from 'src/models/propuesta.entity';
+import { Propuesta } from '../models/propuesta.entity';
 
-import { CreatePropuestaDto } from 'src/dtos/propuesta.dto';
+import { CreatePropuestaDto } from '../dtos/propuesta.dto';
 
 @Injectable()
 export class PropuestaService {
@@ -34,7 +34,7 @@ export class PropuestaService {
         return await this.propuestaRepository.find();
     }
 
-    async eliminarPropuestaById(id: number) {
+    async deletePropuestaById(id: number): Promise<String> {
         const propuesta: Propuesta = await this.propuestaRepository.findOne({ where: {id}, relations: ['proyecto'] });
         if (!propuesta) {
             throw new NotFoundException(`Propuesta con id ${id} no encontrado`);
@@ -43,6 +43,6 @@ export class PropuestaService {
             throw new BadRequestException('No se puede eliminar la propuesta porque tiene asociado un proyecto');
         }
         await this.propuestaRepository.delete(id);
-        return { message: 'Propuesta eliminada exitosamente' };
+        return 'Propuesta eliminada exitosamente';
     }
 }

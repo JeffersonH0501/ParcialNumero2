@@ -3,7 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { databaseConfig } from './config/database.config';
 
 import { AppController } from './app.controller';
+import { ProfesorController } from './controllers/profesor.controller';
 import { PropuestaController } from './controllers/propuesta.controller';
+import { EstudianteController } from './controllers/estudiante.controller';
+import { ProyectoController } from './controllers/proyecto.controller';
 
 import { AppService } from './app.service';
 import { ProfesorService } from './services/profesor.service';
@@ -27,7 +30,10 @@ import { Proyecto } from './models/proyecto.entity';
   ],
   controllers: [
     AppController,
-    PropuestaController
+    ProfesorController,
+    PropuestaController,
+    EstudianteController,
+    ProyectoController
   ],
   providers: [
     AppService,

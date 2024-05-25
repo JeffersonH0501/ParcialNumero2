@@ -20,13 +20,13 @@ export class Propuesta {
     @JoinColumn({ name: 'proyectoId' })
     proyecto: Proyecto;
 
-    @Column()
+    @Column({ nullable: true })
     proyectoId: number;
 
     @ManyToOne(() => Profesor, profesor => profesor.propuestas)
     @JoinColumn({ name: 'profesorId' })
     profesor: Profesor;
 
-    @Column()
+    @Column({ nullable: true })
     profesorId: number;
 }

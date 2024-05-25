@@ -7,6 +7,5 @@ export const databaseConfig: TypeOrmModuleOptions = {
     username: 'jefferson',
     password: '123',
     database: 'parcial',
-    synchronize: true,
-    autoLoadEntities: true,
+    synchronize: true
 };

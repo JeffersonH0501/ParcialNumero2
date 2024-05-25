@@ -61,7 +61,7 @@ export class ProfesorService {
                 throw new BadRequestException('No se puede eliminar un profesor que tiene una propuesta con un proyecto asociado');
             }
         }
-        await this.profesorRepository.delete(documento);
+        await this.profesorRepository.delete(profesor.id);
         return 'Profesor eliminado exitosamente';
     }
 }

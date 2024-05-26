@@ -2,7 +2,6 @@ export class CreateEstudianteDto {
     nombre: string;
     codigo: string;
     numeroCreditosAprovados: number;
-    id: number;
 }
 
 /*

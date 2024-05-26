@@ -2,7 +2,6 @@ export class CreatePropuestaDto {
     titulo: string;
     descripcion: string;
     palabraClave: string;
-    id: number;
 }
 
 /*

@@ -1,0 +1,950 @@
+{
+	"info": {
+		"_postman_id": "dec199b7-62ef-4518-9c48-3e9387bd46dd",
+		"name": "Documentacion Parcial API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26120616"
+	},
+	"item": [
+		{
+			"name": "Proyectos",
+			"item": [
+				{
+					"name": "Crear un proyecto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"proyecto_id\", data.id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fechaInicio\": \"2024-06-01\",\r\n    \"fechaFin\": \"2024-06-30\",\r\n    \"URL\": \"https://ejemplo.com/proyecto\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/proyectos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"proyectos"
+							]
+						},
+						"description": "### POST /proyectos\n\nThis endpoint is used to create a new project.\n\n#### Request Body\n\n- `fechaInicio` (string, optional): The start date of the project.\n    \n- `fechaFin` (string, optional): The end date of the project.\n    \n- `URL` (string, optional): The URL related to the project.\n    \n\n#### Response\n\nThe response for this request follows the JSON schema below:\n\n``` json\n{\n    \"fechaInicio\": \"2024-06-01\",\n    \"fechaFin\": \"2024-06-30\",\n    \"URL\": \"https://ejemplo.com/proyecto\",\n    \"estudianteId\": null,\n    \"id\": number\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un proyecto con fechas invalidas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"   pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fechaInicio\": \"2024-06-30\",\r\n    \"fechaFin\": \"2024-06-01\",\r\n    \"URL\": \"https://ejemplo.com/proyecto\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/proyectos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"proyectos"
+							]
+						},
+						"description": "### POST /proyectos\n\nThis endpoint is used to create a new project.\n\n#### Request\n\nThe request should be sent in the JSON format with the following parameters:\n\n- `fechaInicio` (string, optional): The start date of the project.\n    \n- `fechaFin` (string, optional): The end date of the project.\n    \n- `URL` (string, optional): The URL associated with the project.\n    \n\n#### Response\n\nThe response will be in the JSON format with the following schema:\n\n``` json\n{\n    \"message\": \"No se puedo crear el proyecto porque La fecha de inicio es posterior a la fecha de fin\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}\n\n ```\n\nThe response will include the following fields:\n\n- `message` (string): A message regarding the response.\n    \n- `error` (string): Details of the error, if any.\n    \n- `statusCode` (number): The status code of the response."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estudiantes",
+			"item": [
+				{
+					"name": "Crear un estudiante",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"estudiante_id\", data.id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Jefferson\",\r\n    \"codigo\": \"1234567890\",\r\n    \"numeroCreditosAprovados\": 120\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/estudiantes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"estudiantes"
+							]
+						},
+						"description": "The endpoint allows you to create a new student record by sending an HTTP POST request to {{baseURL}}/estudiantes.\n\n### Request Body\n\nThe request should include a JSON payload in the raw request body type with the following parameters:\n\n- `nombre` (string): The name of the student.\n    \n- `codigo` (string): The student's unique code.\n    \n- `numeroCreditosAprovados` (number): The number of approved credits for the student.\n    \n\n### Response\n\nUpon successful creation, the API responds with a status code of 201 and a JSON object with the following schema:\n\n``` json\n{\n    \"nombre\": \"Jefferson\",\n    \"codigo\": \"1234567890\",\n    \"numeroCreditosAprovados\": 120,\n    \"id\": 10\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un estudiante con codigo invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"   pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Jefferson\",\r\n    \"codigo\": \"1234\",\r\n    \"numeroCreditosAprovados\": 120\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/estudiantes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"estudiantes"
+							]
+						},
+						"description": "The endpoint makes an HTTP POST request to create a new student resource at {{baseURL}}/estudiantes. The request should include a JSON payload in the raw request body type with the keys \"nombre\", \"codigo\", and \"numeroCreditosAprovados\".\n\n### Response\n\nThe response of this request is documented as a JSON schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"string\"\n    },\n    \"nombre\": {\n      \"type\": \"string\"\n    },\n    \"codigo\": {\n      \"type\": \"string\"\n    },\n    \"numeroCreditosAprovados\": {\n      \"type\": \"number\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Encontrar un estudiante por su id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/estudiantes/{{estudiante_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"estudiantes",
+								"{{estudiante_id}}"
+							]
+						},
+						"description": "This endpoint retrieves information about a specific student identified by the provided \"estudiante_id\".\n\n### Response\n\nThe response will be a JSON object representing the details of the student. You can refer to the JSON schema below to understand the structure of the response.\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"string\"\n    },\n    \"name\": {\n      \"type\": \"string\"\n    },\n    \"age\": {\n      \"type\": \"integer\"\n    },\n    \"grade\": {\n      \"type\": \"string\"\n    },\n    \"address\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"street\": {\n          \"type\": \"string\"\n        },\n        \"city\": {\n          \"type\": \"string\"\n        },\n        \"zipCode\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Encontrar un estudiante por su id inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/estudiantes/999",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"estudiantes",
+								"999"
+							]
+						},
+						"description": "\n### Get Student Details\nThis endpoint retrieves the details of a specific student by their ID.\n\n#### Request\n- Method: GET\n- URL: `{{baseURL}}/estudiantes/999`\n\n#### Response\n- Status: 404\n- Content-Type: application/json\n- Body:\n  ```json\n  {\n    \"message\": \"\",\n    \"error\": \"\",\n    \"statusCode\": 0\n  }\n  ```\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Propuestas",
+			"item": [
+				{
+					"name": "Crear una propuesta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"propuesta_id\", data.id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Implementación de Automatización de Procesos\",\r\n    \"descripcion\": \"Se quiere implementar una automatización de procesos industriales\",\r\n    \"palabraClave\": \"Implementación\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/propuestas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"propuestas"
+							]
+						},
+						"description": "### POST /propuestas\n\nThis endpoint is used to create a new proposal.\n\n#### Request\n\nThe request should be sent as an HTTP POST to `{{baseURL}}/propuestas`. The request body should be in JSON format and include the following parameters:\n\n- `titulo` (string, required): The title of the proposal.\n    \n- `descripcion` (string, required): The description of the proposal.\n    \n- `palabraClave` (string, required): The keyword associated with the proposal.\n    \n\nExample:\n\n``` json\n{\n    \"titulo\": \"Sample Title\",\n    \"descripcion\": \"Sample Description\",\n    \"palabraClave\": \"Sample Keyword\"\n}\n#### Response\nUpon successful execution, the endpoint returns a status code of 201 and a JSON response with the following schema:\n```json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"titulo\": {\n            \"type\": \"string\"\n        },\n        \"descripcion\": {\n            \"type\": \"string\"\n        },\n        \"palabraClave\": {\n            \"type\": \"string\"\n        },\n        \"proyectoId\": {\n            \"type\": [\"null\", \"integer\"]\n        },\n        \"profesorId\": {\n            \"type\": [\"null\", \"integer\"]\n        },\n        \"id\": {\n            \"type\": \"integer\"\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear propuesta con un proyecto asociado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"propuesta2_id\", data.id);\r",
+									"pm.globals.set(\"propuesta2\", data);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Implementación de Automatización de Procesos\",\r\n    \"descripcion\": \"Se quiere implementar una automatización de procesos industriales\",\r\n    \"palabraClave\": \"Implementación\",\r\n    \"proyectoId\": {{proyecto_id}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/propuestas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"propuestas"
+							]
+						},
+						"description": "### Create Proposal\n\nThis endpoint allows users to create a new proposal for a project.\n\n#### Request Body\n\n- `titulo` (string): The title of the proposal.\n    \n- `descripcion` (string): A brief description of the proposal.\n    \n- `palabraClave` (string): A keyword associated with the proposal.\n    \n- `proyectoId` (integer): The ID of the project to which the proposal belongs.\n    \n\n#### Response\n\nUpon successful creation, the server responds with a status code of 201 and a JSON object containing the details of the newly created proposal, including the `titulo`, `descripcion`, `palabraClave`, `proyectoId`, `profesorId`, and `id`."
+					},
+					"response": []
+				},
+				{
+					"name": "Crear una propuesta con titulo vacio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"   pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descripcion\": \"Se quiere implementar una automatización de procesos industriales\",\r\n    \"palabraClave\": \"Implementación\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/propuestas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"propuestas"
+							]
+						},
+						"description": "This endpoint allows you to make an HTTP POST request to {{baseURL}}/propuestas in order to submit a proposal. The request should include a raw JSON body with the keys \"descripcion\" and \"palabraClave\". The response will have a status code of 400 and a JSON content type, and will include a message, error, and statusCode in the response body."
+					},
+					"response": []
+				},
+				{
+					"name": "Encontrar una propuesta por su id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/propuestas/{{propuesta_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"propuestas",
+								"{{propuesta_id}}"
+							]
+						},
+						"description": "The endpoint retrieves a specific proposal by its ID.\n\nThe response returned is a JSON object with the following properties:\n\n- titulo (string): The title of the proposal.\n    \n- descripcion (string): The description of the proposal.\n    \n- palabraClave (string): The keyword associated with the proposal.\n    \n- id (number): The unique identifier of the proposal.\n    \n- proyectoId (null): The ID of the project associated with the proposal.\n    \n- profesorId (null): The ID of the professor associated with the proposal.\n    \n- proyecto (null): Details of the project associated with the proposal.\n    \n- profesor (null): Details of the professor associated with the proposal.\n    \n\nThis response can be documented as a JSON schema for reference."
+					},
+					"response": []
+				},
+				{
+					"name": "Encontrar una propuesta por su id inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/propuestas/999",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"propuestas",
+								"999"
+							]
+						},
+						"description": "### GET /propuestas/999\n\nThis endpoint retrieves a specific proposal with the ID 999.\n\n#### Request\n\nNo request body is required for this endpoint.\n\n#### Response\n\nThe response will be in JSON format and will include the following fields:\n\n- `message` (string): A message related to the response.\n    \n- `error` (string): Details of the error, if any.\n    \n- `statusCode` (number): The status code of the response.\n    \n\nExample response:\n\n``` json\n{\n    \"message\": \"\",\n    \"error\": \"\",\n    \"statusCode\": 0\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Encontrar todas las propuestas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/propuestas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"propuestas"
+							]
+						},
+						"description": "### GET /propuestas\n\nThis endpoint retrieves a list of proposals.\n\n#### Request\n\nThere are no request parameters for this endpoint.\n\n#### Response\n\nThe response is in JSON format and returns an array of objects with the following properties:\n\n- `titulo` (string, required): The title of the proposal.\n    \n- `descripcion` (string, required): The description of the proposal.\n    \n- `palabraClave` (string, required): The keyword associated with the proposal.\n    \n- `id` (integer, required): The unique identifier of the proposal.\n    \n- `proyectoId` (integer, required): The unique identifier of the associated project.\n    \n- `profesorId` (integer, optional): The unique identifier of the associated professor, if applicable.\n    \n- `proyecto` (object, required): The details of the associated project, including `fechaInicio` (string), `fechaFin` (string), `URL` (string), and `id` (integer).\n    \n- `profesor` (object, optional): The details of the associated professor, if applicable.\n    \n\nExample Response:\n\n``` json\n[\n  {\n    \"titulo\": \"\",\n    \"descripcion\": \"\",\n    \"palabraClave\": \"\",\n    \"id\": 0,\n    \"proyectoId\": 0,\n    \"profesorId\": null,\n    \"proyecto\": {\n      \"fechaInicio\": \"\",\n      \"fechaFin\": \"\",\n      \"URL\": \"\",\n      \"id\": 0,\n      \"estudianteId\": null\n    },\n    \"profesor\": null\n  }\n]\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar una propuesta por su id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/propuestas/{{propuesta_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"propuestas",
+								"{{propuesta_id}}"
+							]
+						},
+						"description": "### DELETE /propuestas/{{propuesta_id}}\n\nThis endpoint is used to delete a specific proposal.\n\n#### Request\n\nNo request body is required for this endpoint.\n\n- `propuesta_id` (path parameter) : The ID of the proposal to be deleted.\n    \n\n#### Response\n\nThe response for this request is a JSON schema as follows:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"number\",\n      \"description\": \"The HTTP status code of the response.\"\n    },\n    \"message\": {\n      \"type\": \"string\",\n      \"description\": \"A message indicating the result of the operation.\"\n    }\n  }\n}\n\n ```\n\nThe last execution of this request returned the following response:\n\n- Status: 200\n    \n- Content-Type: text/html\n    \n- Body: Propuesta eliminada exitosamente"
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar una propuesta por su id inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/propuestas/999",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"propuestas",
+								"999"
+							]
+						},
+						"description": "### DELETE /propuestas/999\n\nThis endpoint is used to delete a specific proposal with the ID 999.\n\n#### Request Body\n\nThis request does not require a request body.\n\n#### Response\n\nThe response for this request is in JSON format and includes the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"error\": {\n      \"type\": \"string\"\n    },\n    \"statusCode\": {\n      \"type\": \"integer\"\n    }\n  }\n}\n\n ```\n\nThe response will have a status code of 404 when the proposal with the specified ID is not found."
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar una propuesta por su id con un proyecto asociado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"   pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/propuestas/{{propuesta2_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"propuestas",
+								"{{propuesta2_id}}"
+							]
+						},
+						"description": "### DELETE /propuestas/{{propuesta2_id}}\n\nThis endpoint is used to delete a specific proposal.\n\n#### Request\n\nNo request body is required for this endpoint.\n\n- `propuesta2_id` (path parameter) - The ID of the proposal to be deleted.\n    \n\n#### Response\n\nThe response for this request is in JSON format and has the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"message\": {\n            \"type\": \"string\"\n        },\n        \"error\": {\n            \"type\": \"string\"\n        },\n        \"statusCode\": {\n            \"type\": \"integer\"\n        }\n    }\n}\n\n ```\n\nThe response will have a status code of 400 in case of an error, and it will include the following properties:\n\n- `message` (string) - A message related to the error.\n    \n- `error` (string) - Details of the error.\n    \n- `statusCode` (integer) - The status code of the response."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profesores",
+			"item": [
+				{
+					"name": "Crear un profesor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"profesor_id\", data.id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"documento\": 1092524481,\r\n    \"nombre\": \"Camilo\",\r\n    \"grupoInvestigacion\": \"COMIT\",\r\n    \"numeroExtension\": 200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/profesores",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"profesores"
+							]
+						},
+						"description": "### POST /profesores\n\nThis endpoint is used to create a new professor.\n\n#### Request Body\n\n- `documento` (number) - The document number of the professor.\n    \n- `nombre` (string) - The name of the professor.\n    \n- `grupoInvestigacion` (string) - The research group of the professor.\n    \n- `numeroExtension` (number) - The extension number of the professor.\n    \n\n#### Response\n\nThe response is in JSON format and has the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"documento\": {\n      \"type\": \"number\"\n    },\n    \"nombre\": {\n      \"type\": \"string\"\n    },\n    \"grupoInvestigacion\": {\n      \"type\": \"string\"\n    },\n    \"numeroExtension\": {\n      \"type\": \"number\"\n    },\n    \"id\": {\n      \"type\": \"number\"\n    }\n  }\n}\n\n ```\n\nThe response contains the same properties as the request body, along with an additional `id` property which represents the unique identifier of the newly created professor."
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un profesor (copia)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"profesor_documento\", data.documento);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"documento\": 1234567890,\r\n    \"nombre\": \"Camilo\",\r\n    \"grupoInvestigacion\": \"COMIT\",\r\n    \"numeroExtension\": 200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/profesores",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"profesores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un profesor con grupo de investigacion invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"   pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"documento\": 1092524481,\r\n    \"nombre\": \"Camilo\",\r\n    \"grupoInvestigacion\": \"invalido\",\r\n    \"numeroExtension\": 200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/profesores",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"profesores"
+							]
+						},
+						"description": "### Request Description\n\nThis endpoint allows the creation of new professors. The request should be sent via an HTTP POST method to the {{baseURL}}/profesores endpoint. The request body should be in raw JSON format and include the following parameters:\n\n- `documento` (number): The document number of the professor.\n    \n- `nombre` (string): The name of the professor.\n    \n- `grupoInvestigacion` (string): The research group associated with the professor.\n    \n- `numeroExtension` (number): The extension number of the professor.\n    \n\n### Response\n\nThe response to the request will have a status code of 400 and a content type of application/json. The response body will include the following fields:\n\n- `message` (string): A message related to the error.\n    \n- `error` (string): Details of the error.\n    \n- `statusCode` (number): The status code of the response.\n    \n\n### JSON Schema for Response\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"message\": {\n            \"type\": \"string\"\n        },\n        \"error\": {\n            \"type\": \"string\"\n        },\n        \"statusCode\": {\n            \"type\": \"number\"\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Encontrar un profesor por su id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/profesores/{{profesor_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"profesores",
+								"{{profesor_id}}"
+							]
+						},
+						"description": "This endpoint retrieves the details of a specific professor identified by the `profesor_id`. The response is in JSON format and has the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"documento\": {\n            \"type\": \"integer\"\n        },\n        \"nombre\": {\n            \"type\": \"string\"\n        },\n        \"grupoInvestigacion\": {\n            \"type\": \"string\"\n        },\n        \"numeroExtension\": {\n            \"type\": \"integer\"\n        },\n        \"id\": {\n            \"type\": \"integer\"\n        },\n        \"propuestas\": {\n            \"type\": \"array\",\n            \"items\": {}\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Encontrar un profesor por su id inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/profesores/999",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"profesores",
+								"999"
+							]
+						},
+						"description": "### Get Professor Details\n\nThis endpoint retrieves the details of a specific professor.\n\n#### Request\n\n- Method: GET\n    \n- URL: `{{baseURL}}/profesores/999`\n    \n\n#### Response\n\nThe response for this request is a JSON object with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"id\": {\n      \"type\": \"integer\"\n    },\n    \"name\": {\n      \"type\": \"string\"\n    },\n    \"email\": {\n      \"type\": \"string\"\n    },\n    \"department\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un profesor por su id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/profesores/{{profesor_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"profesores",
+								"{{profesor_id}}"
+							]
+						},
+						"description": "### Delete Profesor\n\nThis endpoint is used to delete a specific profesor.\n\n#### Request\n\n- Method: DELETE\n    \n- URL: `{{baseURL}}/profesores/{{profesor_id}}`\n    \n\n#### Response\n\n- Status: 200\n    \n- Content-Type: text/html\n    \n\nThe response does not contain a JSON schema as the content type is `text/html`. The response body contains the message \"Profesor eliminado exitosamente\" indicating that the profesor was successfully deleted."
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un profesor por su documento",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/profesores/documento/{{profesor_documento}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"profesores",
+								"documento",
+								"{{profesor_documento}}"
+							]
+						},
+						"description": "### Delete Professor Document\n\nThis endpoint is used to delete a specific document associated with a professor.\n\n#### Response\n\nThe response for this request is a JSON object with the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"message\": {\n            \"type\": \"string\"\n        },\n        \"error\": {\n            \"type\": \"string\"\n        },\n        \"statusCode\": {\n            \"type\": \"integer\"\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un profesor por su id inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/profesores/999",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"profesores",
+								"999"
+							]
+						},
+						"description": "The endpoint makes an HTTP DELETE request to delete the professor with the ID 999.\n\n### Response\n\nThe response is in JSON format with the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"message\": {\n            \"type\": \"string\"\n        },\n        \"error\": {\n            \"type\": \"string\"\n        },\n        \"statusCode\": {\n            \"type\": \"number\"\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un profesor por su documento inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/profesores/documento/999",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"profesores",
+								"documento",
+								"999"
+							]
+						},
+						"description": "The API request makes an HTTP DELETE call to delete a specific document associated with a professor. The endpoint for this request is `{{baseURL}}/profesores/documento/999`.\n\n### Response\n\nThe response returned a status code of 404 and the content type is `application/json`. The response body follows the JSON schema below:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"message\": {\n            \"type\": \"string\"\n        },\n        \"error\": {\n            \"type\": \"string\"\n        },\n        \"statusCode\": {\n            \"type\": \"integer\"\n        }\n    }\n}\n\n ```\n\nThis JSON schema describes the structure of the response object returned by the API endpoint."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}

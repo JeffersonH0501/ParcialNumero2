@@ -21,7 +21,7 @@ export class ProfesorController {
         return this.profesorService.eliminarProfesorById(id);
     }
 
-    @Delete(':documento')
+    @Delete('/documento/:documento')
     async eliminarProfesorPorDocumento(@Param('documento') documento: number) {
         return this.profesorService.eliminarProfesorByDocumento(documento);
     }

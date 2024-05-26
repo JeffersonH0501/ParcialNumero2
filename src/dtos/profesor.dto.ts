@@ -3,7 +3,6 @@ export class CreateProfesorDto {
     nombre: string;
     grupoInvestigacion: string;
     numeroExtension: number;
-    id: number;
 }
 
 /*

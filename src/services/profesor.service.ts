@@ -26,7 +26,7 @@ export class ProfesorService {
     }
 
     async findProfesorById(id: number): Promise<Profesor> {
-        const profesor = await this.profesorRepository.findOne({ where: {id} });
+        const profesor = await this.profesorRepository.findOne({ where: {id}, relations: ['propuestas'] });
         if (!profesor) {
             throw new NotFoundException(`Profesor con id ${id} no encontrado`);
         }

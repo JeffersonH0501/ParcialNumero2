@@ -23,7 +23,7 @@ export class PropuestaService {
     }
 
     async findPropuestaById(id: number): Promise<Propuesta> {
-        const propuesta = await this.propuestaRepository.findOne({ where: {id} });
+        const propuesta = await this.propuestaRepository.findOne({ where: {id}, relations: ['proyecto', 'profesor'] });
         if (!propuesta) {
             throw new NotFoundException(`Propuesta con id ${id} no encontrada`);
         }
@@ -31,7 +31,7 @@ export class PropuestaService {
     }
 
     async findAllPropuestas(): Promise<Propuesta[]> {
-        return await this.propuestaRepository.find();
+        return await this.propuestaRepository.find({ relations: ['proyecto', 'profesor'] });
     }
 
     async deletePropuestaById(id: number): Promise<String> {

@@ -20,10 +20,7 @@ import { Proyecto } from './models/proyecto.entity';
 @Module({
   imports: [
       TypeOrmModule.forRoot(databaseConfig),
-      TypeOrmModule.forFeature([Profesor]),
-      TypeOrmModule.forFeature([Propuesta]),
-      TypeOrmModule.forFeature([Estudiante]),
-      TypeOrmModule.forFeature([Proyecto]),
+      TypeOrmModule.forFeature([Profesor, Propuesta, Estudiante, Proyecto])
   ],
   controllers: [
     ProfesorController,
